@@ -7,24 +7,28 @@ const themes = {
     LIGHT: 'light-theme',
     DARK: 'dark-theme',
 };
+defaultTheme();
+checkStatus();
 
-const defaultTheme = localStorage.setItem('body_theme', themes.LIGHT);
+refs.themeSwitchBtn.addEventListener('change', toggle => {
+    toggle.target.checked ? themeDark() : themeLight()
+});
 
-const checkStatus = function () {
+function defaultTheme() {
+    refs.body.classList.add(themes.LIGHT);
+    localStorage.setItem('body_theme', themes.LIGHT);
+};
+
+function checkStatus() {
     if (localStorage.getItem('checked') === "true") {
         (refs.themeSwitchBtn.checked = true);
+        localStorage.setItem('body_theme', themes.DARK);
+        refs.body.classList.remove(themes.LIGHT)
         refs.body.classList.add(themes.DARK);
     } else {
         (refs.themeSwitchBtn.checked = false);
     }
 };
-checkStatus();
-
-refs.themeSwitchBtn.addEventListener('change', toggle => {
-    toggle.target.checked ? themeDark() : themeLight()});
-
-
-
 
 function themeLight() {
     if (localStorage.getItem('body_theme', themes.LIGHT)) {
@@ -32,7 +36,7 @@ function themeLight() {
         refs.body.classList.add(themes.LIGHT);
         localStorage.setItem('body_theme', themes.LIGHT);
         localStorage.setItem('checked', false);
-    }    
+    }
 };
 
 function themeDark() {
@@ -41,14 +45,5 @@ function themeDark() {
         refs.body.classList.add(themes.DARK);
         localStorage.setItem('body_theme', themes.DARK);
         localStorage.setItem('checked', true);
-    }    
+    }
 };
-
-
-// refs.body.classList.add(defaultTheme);
-
-
-// localStorage.setItem('body_theme', JSON.stringify(themes));
-
-// const bodyTheme = JSON.parse(localStorage.getItem('body_theme'));
-
